@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Mansalva|Raleway:300,400,500&display=swap');
+
+html { height: 100%; }
+body {
+  height: 100%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  font-family: 'Raleway', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+a {
+  text-decoration: none;
+}
+
+#root { height: 100%; }
+
+.cursive {
+  font-family: 'Mansalva', cursive;
+}
