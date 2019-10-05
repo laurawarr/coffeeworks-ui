@@ -1,5 +1,5 @@
-import * as api from './apiCalls';
-import { ICONS } from '../../components/Browse/Map';
+import * as api from './api';
+import { ICONS } from '../components/Browse/Map';
 
 export const updateBrowseCafeList = data => ({
   type: 'UPDATE_BROWSE_CAFE_LIST',
@@ -40,5 +40,3 @@ export const hoverCafeMarker = (placeID = null) => (dispatch, getState) => {
   const targetCafe = cafes.find((cafe) => cafe.placeID === placeID);
   if (targetCafe) targetCafe.marker.setIcon(ICONS.hover);
 };
-
-export const selectCafeMarker = placeID => {};

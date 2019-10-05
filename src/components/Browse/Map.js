@@ -1,12 +1,19 @@
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { updateBrowseMap, hoverCafeMarker } from '../../actions/browse';
+
+import { updateBrowseMap, updateBrowseMapConfig, hoverCafeMarker } from '../../actions/browse';
+import { throttle } from '../../actions/helpers';
+
+const { InfoWindow } = window.google.maps;
 
 const useStyles = makeStyles(theme => ({
   root: {
     flex: 5,
     height: '100%',
     background: theme.palette.accent.white,
+  },
+  infoWindow: {
+    color: theme.palette.accent.dark,
   },
 }));
 
@@ -33,19 +40,31 @@ export const ICONS = {
 
 export default (props) => {
   const classes = useStyles();
-  const { dispatch, cafes, mapConfig } = props;
+  const { dispatch, cafes, map, mapConfig } = props;
   const { Map } = window.google.maps;
+
+  const selectCafeMarker = (placeID = null) => {
+    const targetCafe = cafes.find((cafe) => cafe.placeID === placeID);
+    if (targetCafe) {
+      const { marker } = targetCafe;
+      const content = `<div class=${classes.infoWindow}>${targetCafe.name}</div>`;
+      new InfoWindow({ content }).open(map, marker);
+    }
+  };
 
   useEffect(() => {
     const map = new Map(document.getElementById('map'), mapConfig);
+    map.addListener('center_changed', throttle(() => {
+      dispatch(updateBrowseMapConfig({ ...mapConfig, center: map.getCenter().toJSON() }))
+    }, 5000));
     dispatch(updateBrowseMap(map));
-  }, [mapConfig]);
+  }, []);
 
   useEffect(() => {
     cafes.forEach((cafe) => {
       cafe.marker.addListener('mouseover', () => dispatch(hoverCafeMarker(cafe.placeID)));
       cafe.marker.addListener('mouseout', () => dispatch(hoverCafeMarker(null)));
-      // cafe.marker.addListener('click', () => selectCafe(cafe.placeID));
+      cafe.marker.addListener('click', () => selectCafeMarker(cafe.placeID));
     });
   }, [cafes]);
 

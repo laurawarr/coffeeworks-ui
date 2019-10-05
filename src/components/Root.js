@@ -17,6 +17,7 @@ import Login from './Login/Index'
 import SignUp from './SignUp/Index'
 import Browse from './Browse/Index'
 import Review from './Review/Index'
+import Cafe from './Cafe/Index'
 
 import globalTheme from '../theme.js';
 
@@ -90,6 +91,7 @@ const Root = (props) => {
             <Route path="/create-account" component={SignUp} />
             <Route path="/browse" component={Browse} />
             <Route path="/review" component={Review} />
+            <Route path="/cafe/:id" component={Cafe} />
           </Switch>
         </ConnectedRouter>
       </div>

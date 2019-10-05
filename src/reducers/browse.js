@@ -10,6 +10,11 @@ const defaultState = {
   },
 }
 
+const storedMapConfig = window.localStorage.getItem('mapConfig');
+if (storedMapConfig) {
+ defaultState.mapConfig = JSON.parse(storedMapConfig);
+}
+
 export default function(state = defaultState, action) {
   switch (action.type) {
     case 'UPDATE_BROWSE_CAFE_LIST': {
@@ -37,6 +42,7 @@ export default function(state = defaultState, action) {
         map: action.map,
       };
     case 'UPDATE_BROWSE_MAP_CONFIG':
+      window.localStorage.setItem('mapConfig', JSON.stringify(action.data));
       return {
         ...state,
         mapConfig: action.data,

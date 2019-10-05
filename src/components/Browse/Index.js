@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Map from './Map';
 import List from './List';
 
-import { updateBrowseMapConfig, browseCafes } from '../../actions/browse'
+import { browseCafes } from '../../actions/browse'
 
 const useStyles = makeStyles(theme => ({
   '@keyframes slide': {
@@ -23,21 +23,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Browse = (props) => {
-  const { dispatch, mapConfig } = props;
+  const { dispatch, map, mapConfig } = props;
   const classes = useStyles();
 
   useEffect(() => {
-    const config = { ...mapConfig };
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        config.center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        };
-        dispatch(updateBrowseMapConfig(config));
-      });
+    if (map && 'geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(position => map.panTo({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      }));
     }
-  }, []);
+  }, [map]);
 
   useEffect(() => dispatch(browseCafes()), [mapConfig]);
 
@@ -51,5 +47,6 @@ const Browse = (props) => {
 
 export default connect(state => ({
   cafes: state.browse.cafes,
+  map: state.browse.map,
   mapConfig: state.browse.mapConfig,
 }))(Browse);

@@ -26,7 +26,7 @@ export default createMuiTheme({
     }
   },
   typography: {
-    fontFamily: 'Raleway, sans-serif',
+    fontFamily: 'Open Sans, sans-serif',
     h6: {
       fontFamily: 'Mansalva, cursive',
       fontSize: '2.25rem',
