@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 
-import { updateSlideDirection } from '../../actions';
+import { updateReviewSlide } from '../../actions';
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -17,29 +17,29 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const pages = ['badges', 'wifi', 'beverages', 'food', 'noise'];
-
 const Navigation = (props) => {
   const classes = useStyles();
-  const { dispatch, page } = props;
-  const current = pages.indexOf(page);
-  const handleNav = (direction, page) => {
-    dispatch(updateSlideDirection(direction));
-    dispatch(push(`/review/${page}`));
+  const { dispatch, slideIndex, slideCount } = props;
+
+  const handleNav = (index) => {
+    let newIndex = index;
+    newIndex = Math.max(newIndex, 0)
+    newIndex = Math.min(newIndex, slideCount - 1)
+    dispatch(updateReviewSlide(newIndex));
   }
 
   return (
     <div className={classes.wrapper}>
-      {current > 0 ? (
-        <Button onClick={() => handleNav('back', pages[Math.max(current - 1, 0)])}>
+      {slideIndex > 0 ? (
+        <Button onClick={() => handleNav(slideIndex - 1)}>
           <ChevronLeft /> Back
         </Button>
       ) : <div />}
-      {current < pages.length - 1 ? (
+      {slideIndex < slideCount - 1 ? (
         <Button
           color="primary"
           variant="contained"
-          onClick={() => handleNav('forward', pages[Math.min(current + 1, pages.length - 1)])}
+          onClick={() => handleNav(slideIndex + 1)}
         >
           Next <ChevronRight />
         </Button>
@@ -56,4 +56,7 @@ const Navigation = (props) => {
   );
 };
 
-export default connect()(Navigation);
+export default connect(state => ({
+  slideIndex: state.review.slideIndex,
+  slideCount: state.review.slideCount,
+}))(Navigation);

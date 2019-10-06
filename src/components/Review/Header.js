@@ -10,6 +10,7 @@ const useStyles = makeStyles(theme => ({
   title: {
     fontSize: '1.4rem',
     fontWeight: 500,
+    whiteSpace: 'nowrap',
   },
   subtitle: {
     fontSize: '.9rem',

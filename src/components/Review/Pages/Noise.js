@@ -12,12 +12,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default () => {
+export default (props) => {
   const classes = useStyles();
+  const { cafe } = props;
   return (
     <PageWrapper>
       <Header
-        title="How was the noise level at this place?"
+        title={`How was the noise level at ${cafe.name || 'this place'}?`}
         // subtitle="Let other users know if you experienced any limitations or restrictions."
       />
       
@@ -37,7 +38,7 @@ export default () => {
         />
       </div>
 
-      <Navigation page="noise" />
+      <Navigation />
     </PageWrapper>
   );
 };

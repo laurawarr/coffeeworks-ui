@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { ConnectedRouter } from 'connected-react-router'
 import { ThemeProvider } from '@material-ui/styles';
 
@@ -16,8 +16,8 @@ import Home from './Home/Index'
 import Login from './Login/Index'
 import SignUp from './SignUp/Index'
 import Browse from './Browse/Index'
-import Review from './Review/Index'
 import Cafe from './Cafe/Index'
+import Review from './Review/Index'
 
 import globalTheme from '../theme.js';
 
@@ -90,8 +90,9 @@ const Root = (props) => {
             <Route path="/login" component={Login} />
             <Route path="/create-account" component={SignUp} />
             <Route path="/browse" component={Browse} />
-            <Route path="/review" component={Review} />
-            <Route path="/cafe/:id" component={Cafe} />
+            <Route path="/cafe/:id" exact component={Cafe} />
+            <Route path="/cafe/:id/review" component={Review} />
+            <Redirect to='/' />
           </Switch>
         </ConnectedRouter>
       </div>

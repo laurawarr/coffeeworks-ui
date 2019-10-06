@@ -13,12 +13,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default () => {
+export default (props) => {
   const classes = useStyles();
+  const { cafe } = props;
   return (
     <PageWrapper>
       <Header
-        title="How would you rate this place's Wi-Fi?"
+        title={`How would you rate the Wi-Fi at ${cafe.name || 'this place'}?`}
         subtitle="Let other users know if you experienced any limitations or restrictions."
       />
       
@@ -56,7 +57,7 @@ export default () => {
         />
       </div>
 
-      <Navigation page="wifi" />
+      <Navigation />
     </PageWrapper>
   );
 };

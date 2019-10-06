@@ -1,13 +1,14 @@
 const defaultState = {
-  slide: 'forward',
+  slideIndex: 0,
+  slideCount: 5,
 }
 
 export default function(state = defaultState, action) {
   switch (action.type) {
-    case 'UPDATE_SLIDE_DIRECTION':
+    case 'UPDATE_REVIEW_SLIDE':
       return {
         ...state,
-        slide: action.direction,
+        slideIndex: action.index,
       };
     case '@@router/LOCATION_CHANGE':
     default:

@@ -1,4 +1,4 @@
-export const updateSlideDirection = direction => ({
-    type: 'UPDATE_SLIDE_DIRECTION',
-    direction,
+export const updateReviewSlide = index => ({
+    type: 'UPDATE_REVIEW_SLIDE',
+    index,
 });

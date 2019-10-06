@@ -1,5 +1,6 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom'
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import SwipeableViews from 'react-swipeable-views';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Badges from './Pages/Badges';
@@ -7,6 +8,9 @@ import Wifi from './Pages/Wifi';
 import Beverages from './Pages/Beverages';
 import Food from './Pages/Food';
 import Noise from './Pages/Noise';
+import CafeNotFound from '../Cafe/CafeNotFound';
+
+import { fetchCafe } from '../../actions/cafe';
 
 const useStyles = makeStyles(theme => ({
   '@keyframes slide': {
@@ -27,22 +31,33 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     flex: 1,
     height: '100%',
-    animation: '$slide 800ms forwards',
+    // animation: '$slide 800ms forwards',
   },
 }));
 
-export default (props) => {
+const Review = (props) => {
   const classes = useStyles();
-  return (
+  const { dispatch, cafe, slideIndex } = props;
+  const { id } = props.match.params;
+
+  useEffect(() => dispatch(fetchCafe(id)), []);
+
+  return !cafe ? (
+    <CafeNotFound />
+  ) : (
     <div className={classes.main}>
-      <Switch location={props.location}>
-        <Route path="/review" exact component={Badges} />
-        <Route path="/review/badges" component={Badges} />
-        <Route path="/review/wifi" component={Wifi} />
-        <Route path="/review/beverages" component={Beverages} />
-        <Route path="/review/food" component={Food} />
-        <Route path="/review/noise" component={Noise} />
-      </Switch>
+      <SwipeableViews index={slideIndex}>
+        <Badges {...props} />
+        <Wifi {...props} />
+        <Beverages {...props} />
+        <Food {...props} />
+        <Noise {...props} />
+      </SwipeableViews>
     </div>
   );
 };
+
+export default connect(state => ({
+  cafe: state.cafe,
+  slideIndex: state.review.slideIndex,
+}))(Review);

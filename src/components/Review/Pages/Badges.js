@@ -10,7 +10,7 @@ import Wifi from '@material-ui/icons/Wifi';
 import Seating from '@material-ui/icons/EventSeat';
 import Power from '@material-ui/icons/Power';
 
-import PageWrapper from '../PageWrapper'
+import PageWrapper from '../PageWrapper';
 import Header from '../Header';
 import Navigation from '../Navigation';
 
@@ -59,14 +59,15 @@ const badges = chunk([
 const defaultSelected = {};
 badges.forEach(badge => { defaultSelected[badge.key] = false; })
 
-export default () => {
+export default (props) => {
   const [selected, setSelected] = useState(defaultSelected);
   const classes = useStyles();
+  const { cafe } = props;
   return (
     <PageWrapper>
       <Header
-        title="What did this place do exceptionally well?"
-        subtitle="Select multiple."
+        title={`What did ${cafe.name || 'this place'} do exceptionally well?`}
+        subtitle="Select all that apply."
       />
       {badges.map((badgeRow, idx) => (
         <div key={idx} className={classes.badgeWrapper} >
@@ -88,7 +89,7 @@ export default () => {
           ))}
         </div>
       ))}
-      <Navigation page="badges" />
+      <Navigation />
     </PageWrapper>
   );
 };

@@ -5,7 +5,17 @@ export const updateCafe = data => ({
   data,
 });
 
+export const resetCafe = () => ({
+  type: 'RESET_CAFE'
+});
+
 export const fetchCafe = (placeID = null) => (dispatch, getState) => {
   api.getCafeById(placeID)
-    .then(data => dispatch(updateCafe(data)));
+    .then((data) => {
+      if (data) {
+        dispatch(updateCafe(data));
+      } else {
+        dispatch(resetCafe(data));
+      }
+    });
 };

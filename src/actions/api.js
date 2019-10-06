@@ -5,5 +5,5 @@ export const getCafes = (lat, lng) => (
 
 export const getCafeById = placeID => (
   fetch(`${window.API}/api/cafes/${placeID}`, { method: 'get' })
-    .then(res => (res.statusText !== 'OK' ? [] : res.json()))
+    .then(res => (res.statusText !== 'OK' ? null : res.json()))
 );
