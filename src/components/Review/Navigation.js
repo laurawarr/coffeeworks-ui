@@ -1,12 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 
-import { updateReviewSlide } from '../../actions';
+import { updateReviewSlide, submitReview } from '../../actions/review';
 
 const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -47,7 +46,7 @@ const Navigation = (props) => {
         <Button
           color="primary"
           variant="contained"
-          onClick={() => dispatch(push('/'))}
+          onClick={() => dispatch(submitReview())}
         >
           Done
         </Button>

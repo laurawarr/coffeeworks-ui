@@ -8,8 +8,11 @@ import PageWrapper from '../PageWrapper';
 import Header from '../Header';
 import Navigation from '../Navigation';
 
+import { updateReviewField } from '../../../actions/review';
+
 export default (props) => {
-  const { cafe } = props;
+  const { dispatch, cafe, review } = props;
+  const { foodOptionsLevel } = review.fields;
   return (
     <PageWrapper>
       <Header
@@ -17,10 +20,15 @@ export default (props) => {
         // subtitle="Let other users know if you experienced any limitations or restrictions."
       />
       
-      <RadioGroup>
-        <FormControlLabel value="none" control={<Radio color="primary"/>} label="They don't offer food" />
-        <FormControlLabel value="light" control={<Radio color="primary"/>} label="Light fare" />
-        <FormControlLabel value="full" control={<Radio color="primary"/>} label="Full meals" />
+      <RadioGroup
+        value={foodOptionsLevel}
+        onChange={(e, val) => dispatch(updateReviewField(val, 'foodOptionsLevel'))}
+      >
+        <FormControlLabel value="0" control={<Radio color="primary"/>} label="They don't offer food" />
+        <FormControlLabel value="1" control={<Radio color="primary"/>} label="Light fare" />
+        <FormControlLabel value="2" control={<Radio color="primary"/>} label="Full meals" />
+        <FormControlLabel value="unknown" control={<Radio color="primary"/>} label="I'm not sure" />
+        <FormControlLabel value="default" control={<span/>} />
       </RadioGroup>
 
       <Navigation />

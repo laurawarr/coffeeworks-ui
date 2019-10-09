@@ -7,6 +7,8 @@ import PageWrapper from '../PageWrapper';
 import Header from '../Header';
 import Navigation from '../Navigation';
 
+import { updateReviewField } from '../../../actions/review';
+
 const useStyles = makeStyles(theme => ({
   sliderWrapper: {
     margin: '1.5em 2em',
@@ -15,7 +17,8 @@ const useStyles = makeStyles(theme => ({
 
 export default (props) => {
   const classes = useStyles();
-  const { cafe } = props;
+  const { dispatch, cafe, review } = props;
+  const { beverageSelection, beverageQuality } = review.fields;
   return (
     <PageWrapper>
       <Header
@@ -26,34 +29,36 @@ export default (props) => {
       <div className={classes.sliderWrapper}>
         <Typography>Selection</Typography>
         <Slider
-          defaultValue={3}
+          value={beverageSelection}
           aria-labelledby="discrete-slider"
           marks={[
-            { value: 1, label: 'Only drip coffee' },
-            { value: 2, label: '' },
-            { value: 3, label: 'Average' },
-            { value: 4, label: '' },
-            { value: 5, label: 'All things coffee' },
+            { value: 0, label: 'Only drip coffee' },
+            { value: 1, label: '' },
+            { value: 2, label: 'Average' },
+            { value: 3, label: '' },
+            { value: 4, label: 'All things coffee' },
           ]}
-          min={1}
-          max={5}
+          min={0}
+          max={4}
+          onChange={(e, val) => dispatch(updateReviewField(val, 'beverageSelection'))}
         />
       </div>
 
       <div className={classes.sliderWrapper}>
         <Typography>Quality</Typography>
         <Slider
-          defaultValue={3}
+          value={beverageQuality}
           aria-labelledby="discrete-slider"
           marks={[
-            { value: 1, label: 'Terrible' },
-            { value: 2, label: '' },
-            { value: 3, label: 'Average' },
-            { value: 4, label: '' },
-            { value: 5, label: 'Outstanding' },
+            { value: 0, label: 'Terrible' },
+            { value: 1, label: '' },
+            { value: 2, label: 'Average' },
+            { value: 3, label: '' },
+            { value: 4, label: 'Outstanding' },
           ]}
-          min={1}
-          max={5}
+          min={0}
+          max={4}
+          onChange={(e, val) => dispatch(updateReviewField(val, 'beverageQuality'))}
         />
       </div>
 

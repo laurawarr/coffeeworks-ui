@@ -11,6 +11,7 @@ import Noise from './Pages/Noise';
 import CafeNotFound from '../Cafe/CafeNotFound';
 
 import { fetchCafe } from '../../actions/cafe';
+import { resetReviewState } from '../../actions/review'
 
 const useStyles = makeStyles(theme => ({
   '@keyframes slide': {
@@ -37,10 +38,14 @@ const useStyles = makeStyles(theme => ({
 
 const Review = (props) => {
   const classes = useStyles();
-  const { dispatch, cafe, slideIndex } = props;
+  const { dispatch, cafe, review } = props;
+  const { slideIndex } = review;
   const { id } = props.match.params;
 
-  useEffect(() => dispatch(fetchCafe(id)), []);
+  useEffect(() => {
+    dispatch(fetchCafe(id));
+    dispatch(resetReviewState());
+  }, []);
 
   return !cafe ? (
     <CafeNotFound />
@@ -59,5 +64,5 @@ const Review = (props) => {
 
 export default connect(state => ({
   cafe: state.cafe,
-  slideIndex: state.review.slideIndex,
+  review: state.review,
 }))(Review);

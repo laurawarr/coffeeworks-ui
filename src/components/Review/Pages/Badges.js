@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { chunk } from 'lodash';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -13,6 +13,8 @@ import Power from '@material-ui/icons/Power';
 import PageWrapper from '../PageWrapper';
 import Header from '../Header';
 import Navigation from '../Navigation';
+
+import { updateReviewField } from '../../../actions/review';
 
 const useStyles = makeStyles(theme => ({
   badgeWrapper: {
@@ -54,15 +56,20 @@ const badges = chunk([
   { key: 'food', label: 'Food', icon: Food },
   { key: 'wifi', label: 'Wi-Fi', icon: Wifi },
   { key: 'seating', label: 'Seating Availability', icon: Seating },
-  { key: 'power', label: 'Access to Power Outlets', icon: Power },
+  { key: 'outlets', label: 'Access to Power Outlets', icon: Power },
 ], 3);
-const defaultSelected = {};
-badges.forEach(badge => { defaultSelected[badge.key] = false; })
 
 export default (props) => {
-  const [selected, setSelected] = useState(defaultSelected);
   const classes = useStyles();
-  const { cafe } = props;
+  const { dispatch, cafe, review } = props;
+  const { badges: selectedBadges } = review.fields;
+
+  const toggleSelectedBadge = badgeKey =>
+    dispatch(updateReviewField(
+      { ...selectedBadges, [badgeKey]: !selectedBadges[badgeKey] },
+      'badges',
+    ));
+
   return (
     <PageWrapper>
       <Header
@@ -80,8 +87,8 @@ export default (props) => {
                 containedPrimary: classes.badgeSelected,
               }}
               variant="contained"
-              color={selected[badge.key] ? 'primary' : 'secondary'}
-              onClick={() => setSelected({ ...selected, [badge.key]: !selected[badge.key] })}
+              color={selectedBadges[badge.key] ? 'primary' : 'secondary'}
+              onClick={() => toggleSelectedBadge(badge.key)}
             >
               <badge.icon className={classes.badgeIcon} />
               <Typography className={classes.badgeText}>{badge.label}</Typography>

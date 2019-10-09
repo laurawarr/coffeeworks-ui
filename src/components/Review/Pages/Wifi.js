@@ -7,6 +7,8 @@ import PageWrapper from '../PageWrapper';
 import Header from '../Header';
 import Navigation from '../Navigation';
 
+import { updateReviewField } from '../../../actions/review';
+
 const useStyles = makeStyles(theme => ({
   sliderWrapper: {
     margin: '1.5em 2em',
@@ -15,7 +17,9 @@ const useStyles = makeStyles(theme => ({
 
 export default (props) => {
   const classes = useStyles();
-  const { cafe } = props;
+  const { dispatch, cafe, review } = props;
+  const { wifiSpeed, wifiRestrictions } = review.fields;
+
   return (
     <PageWrapper>
       <Header
@@ -26,34 +30,36 @@ export default (props) => {
       <div className={classes.sliderWrapper}>
         <Typography>Speed</Typography>
         <Slider
-          defaultValue={3}
+          value={wifiSpeed}
           aria-labelledby="discrete-slider"
           marks={[
-            { value: 1, label: 'Very slow' },
-            { value: 2, label: '' },
-            { value: 3, label: 'Average' },
-            { value: 4, label: '' },
-            { value: 5, label: 'Blazing fast' },
+            { value: 0, label: 'Very slow' },
+            { value: 1, label: '' },
+            { value: 2, label: 'Average' },
+            { value: 3, label: '' },
+            { value: 4, label: 'Blazing fast' },
           ]}
-          min={1}
-          max={5}
+          min={0}
+          max={4}
+          onChange={(e, val) => dispatch(updateReviewField(val, 'wifiSpeed'))}
         />
       </div>
 
       <div className={classes.sliderWrapper}>
         <Typography>Restrictions (ex. time limits)</Typography>
         <Slider
-          defaultValue={3}
+          value={wifiRestrictions}
           aria-labelledby="discrete-slider"
           marks={[
-            { value: 1, label: 'Very limited' },
-            { value: 2, label: '' },
-            { value: 3, label: 'Average' },
-            { value: 4, label: '' },
-            { value: 5, label: 'No restrictions' },
+            { value: 0, label: 'Very limited' },
+            { value: 1, label: '' },
+            { value: 2, label: 'Average' },
+            { value: 3, label: '' },
+            { value: 4, label: 'No restrictions' },
           ]}
-          min={1}
-          max={5}
+          min={0}
+          max={4}
+          onChange={(e, val) => dispatch(updateReviewField(val, 'wifiRestrictions'))}
         />
       </div>
 

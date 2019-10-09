@@ -6,6 +6,8 @@ import PageWrapper from '../PageWrapper';
 import Header from '../Header';
 import Navigation from '../Navigation';
 
+import { updateReviewField } from '../../../actions/review';
+
 const useStyles = makeStyles(theme => ({
   sliderWrapper: {
     margin: '1.5em 2em',
@@ -14,7 +16,8 @@ const useStyles = makeStyles(theme => ({
 
 export default (props) => {
   const classes = useStyles();
-  const { cafe } = props;
+  const { dispatch, cafe, review } = props;
+  const { noiseLevel } = review.fields;
   return (
     <PageWrapper>
       <Header
@@ -24,17 +27,18 @@ export default (props) => {
       
       <div className={classes.sliderWrapper}>
         <Slider
-          defaultValue={3}
+          value={noiseLevel}
           aria-labelledby="discrete-slider"
           marks={[
-            { value: 1, label: 'Very quiet' },
-            { value: 2, label: '' },
-            { value: 3, label: 'Light conversation' },
-            { value: 4, label: '' },
-            { value: 5, label: 'Very loud' },
+            { value: 0, label: 'Very quiet' },
+            { value: 1, label: '' },
+            { value: 2, label: 'Light conversation' },
+            { value: 3, label: '' },
+            { value: 4, label: 'Very loud' },
           ]}
-          min={1}
-          max={5}
+          min={0}
+          max={4}
+          onChange={(e, val) => dispatch(updateReviewField(val, 'noiseLevel'))}
         />
       </div>
 
