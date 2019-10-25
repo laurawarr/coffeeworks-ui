@@ -34,11 +34,14 @@ const useStyles = makeStyles(theme => ({
   button: {
     marginLeft: '.5em',
   },
-  menuButton: {
-    marginRight: globalTheme.spacing(2),
+  homeButton: {
+    marginRight: globalTheme.spacing(1),
     width: '2em',
     height: '2em',
-    border: '2px solid black',
+    padding: 0,
+  },
+  homeIcon: {
+    width: '100%',
   },
   title: {
     flexGrow: 1,
@@ -59,10 +62,16 @@ const Root = (props) => {
           <Toolbar>
             <IconButton
               edge="start"
-              className={classes.menuButton}
+              className={classes.homeButton}
               color="inherit"
               onClick={() => dispatch(push('/'))}
-            />
+            >
+              <img
+                className={classes.homeIcon}
+                src="./images/coffee_circle.svg"
+                alt="coffeeworks logo"
+              />
+            </IconButton>
             <Typography variant="h6" className={classes.title}>
               coffeeworks
             </Typography>
