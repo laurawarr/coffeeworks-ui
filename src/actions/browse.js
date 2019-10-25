@@ -1,5 +1,5 @@
 import * as api from './api';
-import { ICONS } from '../components/Browse/Map';
+import { getIcons } from '../components/Browse/Map';
 
 export const updateBrowseCafeList = data => ({
   type: 'UPDATE_BROWSE_CAFE_LIST',
@@ -29,14 +29,14 @@ export const updateMap = config => (dispatch) => {
 
 export const hoverCafeCard = (placeID = null) => (dispatch, getState) => {
   const { cafes } = getState().browse;
-  cafes.forEach(cafe => cafe.marker.setIcon(ICONS.default));
+  cafes.forEach(cafe => cafe.marker.setIcon(getIcons().default));
   const targetCafe = cafes.find((cafe) => cafe.placeID === placeID);
-  if (targetCafe) targetCafe.marker.setIcon(ICONS.pin);
+  if (targetCafe) targetCafe.marker.setIcon(getIcons().pin);
 };
 
 export const hoverCafeMarker = (placeID = null) => (dispatch, getState) => {
   const { cafes } = getState().browse;
-  cafes.forEach(cafe => cafe.marker.setIcon(ICONS.default));
+  cafes.forEach(cafe => cafe.marker.setIcon(getIcons().default));
   const targetCafe = cafes.find((cafe) => cafe.placeID === placeID);
-  if (targetCafe) targetCafe.marker.setIcon(ICONS.hover);
+  if (targetCafe) targetCafe.marker.setIcon(getIcons().hover);
 };

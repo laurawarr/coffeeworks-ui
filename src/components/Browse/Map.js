@@ -4,8 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { updateBrowseMap, updateBrowseMapConfig, hoverCafeMarker } from '../../actions/browse';
 import { throttle } from '../../actions/helpers';
 
-const { InfoWindow } = window.google.maps;
-
 const useStyles = makeStyles(theme => ({
   root: {
     flex: 5,
@@ -17,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export const ICONS = {
+export const getIcons = () => ({
   default: {
     path: window.google.maps.SymbolPath.CIRCLE,
     fillColor: '#D73A31',
@@ -36,12 +34,12 @@ export const ICONS = {
   },
   selected: null,
   pin: null,
-};
+});
 
 export default (props) => {
   const classes = useStyles();
   const { dispatch, cafes, map, mapConfig } = props;
-  const { Map } = window.google.maps;
+  const { Map, InfoWindow } = window.google.maps;
 
   const selectCafeMarker = (placeID = null) => {
     const targetCafe = cafes.find((cafe) => cafe.placeID === placeID);

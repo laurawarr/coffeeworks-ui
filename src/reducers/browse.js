@@ -1,4 +1,4 @@
-import { ICONS } from '../components/Browse/Map';
+import { getIcons } from '../components/Browse/Map';
 
 const defaultState = {
   cafes: [],
@@ -26,7 +26,7 @@ export default function(state = defaultState, action) {
           const marker = new Marker({
             position: cafe.location,
             map: state.map,
-            icon: ICONS.default,
+            icon: getIcons().default,
           });
           return { ...cafe, marker };
         }),
