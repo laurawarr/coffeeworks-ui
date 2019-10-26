@@ -95,10 +95,10 @@ const Root = (props) => {
 
         <ConnectedRouter history={history}>
           <Switch location={location}>
-            <Route path="/" exact component={Home} />
+            {/* <Route path="/" exact component={Home} /> */}
+            <Route path="/" exact component={Browse} />
             <Route path="/login" component={Login} />
             <Route path="/create-account" component={SignUp} />
-            <Route path="/browse" component={Browse} />
             <Route path="/cafe/:id" exact component={Cafe} />
             <Route path="/cafe/:id/review" component={Review} />
             <Redirect to='/' />

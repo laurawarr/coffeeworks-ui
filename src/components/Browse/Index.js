@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Map from './Map';
 import List from './List';
+import LoadingMap from './LoadingMap';
 
 import { browseCafes } from '../../actions/browse'
 
@@ -36,6 +37,8 @@ const Browse = (props) => {
   }, [map]);
 
   useEffect(() => dispatch(browseCafes()), [mapConfig]);
+
+  if (!window.google) return <LoadingMap />;
 
   return (
     <div className={classes.main}>

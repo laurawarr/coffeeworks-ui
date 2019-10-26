@@ -5,10 +5,15 @@ import { updateBrowseMap, updateBrowseMapConfig, hoverCafeMarker } from '../../a
 import { throttle } from '../../actions/helpers';
 
 const useStyles = makeStyles(theme => ({
+  '@keyframes fadeIn': {
+    from: { opacity: 0 },
+    to: { opacity: 1 }
+  },
   root: {
     flex: 5,
     height: '100%',
     background: theme.palette.accent.white,
+    animation: '$fadeIn 800ms forwards',
   },
   infoWindow: {
     color: theme.palette.accent.dark,
@@ -24,6 +29,7 @@ export const getIcons = () => ({
     strokeWeight: 1,
     scale: 6
   },
+  // pin: './images/coffee_marker.svg',
   hover: {
     path: window.google.maps.SymbolPath.CIRCLE,
     fillColor: '#08708A',
@@ -54,7 +60,7 @@ export default (props) => {
     const map = new Map(document.getElementById('map'), mapConfig);
     map.addListener('center_changed', throttle(() => {
       dispatch(updateBrowseMapConfig({ ...mapConfig, center: map.getCenter().toJSON() }))
-    }, 5000));
+    }, 1000));
     dispatch(updateBrowseMap(map));
   }, []);
 
